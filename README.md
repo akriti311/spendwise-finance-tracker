@@ -54,7 +54,7 @@ http://127.0.0.1:8000/
 ![Home Page](assets/asset1.png)
 
 ### Add Transaction
-![Add Transaction](assets/asset2.png)
+![Category-wise Expense Summary](assets/asset2.png)
 
 
 
