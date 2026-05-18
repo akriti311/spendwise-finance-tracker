@@ -1,0 +1,17 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Sign Up - SpendWise{% endblock %}
+
+{% block content %}
+<div class="auth-box">
+    <h2>Create your SpendWise account</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign Up</button>
+    </form>
+    <p class="help">
+        Already have an account? <a href="{% url 'login' %}">Log in here</a>.
+    </p>
+</div>
+{% endblock %}

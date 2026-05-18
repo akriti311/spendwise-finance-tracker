@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SpendWise{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: #0077cc;
+            color: white;
+            padding: 14px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 16px;
+            font-weight: 500;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar-brand {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-user {
+            margin-right: 8px;
+            opacity: 0.95;
+        }
+
+        .logout-form {
+            display: inline;
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 16px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .messages {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto 0;
+            list-style: none;
+            padding: 0;
+        }
+
+        .messages li {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .messages .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .messages .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 25px;
+        }
+
+        .auth-box {
+            max-width: 420px;
+            margin: 40px auto;
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .auth-box h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #222;
+        }
+
+        .auth-box p.help {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .summary {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 220px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .income {
+            color: green;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .expense {
+            color: red;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .balance {
+            color: #0077cc;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .main-section {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-box, .table-box, .category-box {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-box h2, .table-box h2, .category-box h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        form p, .auth-box form p {
+            margin-bottom: 14px;
+        }
+
+        form label, .auth-box form label {
+            display: block;
+            margin-bottom: 4px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .errorlist {
+            color: #dc3545;
+            margin: 6px 0 0;
+            padding-left: 18px;
+            font-size: 14px;
+        }
+
+        button, .btn-primary {
+            width: 100%;
+            background: #0077cc;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        button:hover, .btn-primary:hover {
+            background: #005fa3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f9fafb;
+        }
+
+        .type-income {
+            color: green;
+            font-weight: bold;
+        }
+
+        .type-expense {
+            color: red;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .delete-btn:hover {
+            background: #b02a37;
+        }
+
+        .empty {
+            text-align: center;
+            color: #888;
+            padding: 20px 0;
+        }
+
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .category-item {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .category-item h4 {
+            margin: 0 0 8px 0;
+            color: #333;
+        }
+
+        .category-item p {
+            margin: 0;
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .main-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="navbar-brand">💰 SpendWise</a>
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <span class="nav-user">Hello, {{ user.username }}</span>
+                <form class="logout-form" method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>
